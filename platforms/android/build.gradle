@@ -197,8 +197,8 @@ android {
 	println('cdvCompileSdkVersion=' + cdvCompileSdkVersion)
     println('cdvBuildToolsVersion=' + cdvBuildToolsVersion)
     
-	compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+	compileSdkVersion 26
+    buildToolsVersion "26.0.1"
 
     if (Boolean.valueOf(cdvBuildMultipleApks)) {
         productFlavors {

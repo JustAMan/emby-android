@@ -1,0 +1,8 @@
+clean-css
+cordova-common
+elementtree
+imagemin
+ng-annotate
+nopt
+properties-parser
+uglify-js
