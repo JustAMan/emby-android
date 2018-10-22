@@ -9,10 +9,6 @@
         "parents": {
           "/*": [
             {
-              "xml": "<feature name=\"Chromecast\"><param name=\"android-package\" value=\"acidhax.cordova.chromecast.Chromecast\" /></feature>",
-              "count": 1
-            },
-            {
               "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
               "count": 1
             },
@@ -47,32 +43,20 @@
         "parents": {
           "/*": [
             {
-              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
-              "count": 1
-            },
-            {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-              "count": 2
+              "count": 1
             },
             {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
-              "count": 2
-            }
-          ],
-          "/manifest/application": [
-            {
-              "xml": "<meta-data android:name=\"com.google.android.gms.version\" android:value=\"@integer/google_play_services_version\" />",
               "count": 1
             }
-          ]
+          ],
+          "/manifest/application": []
         }
       }
     }
   },
   "installed_plugins": {
-    "acidhax.cordova.chromecast": {
-      "PACKAGE_NAME": "com.mb.android"
-    },
     "cordova-plugin-crosswalk-webview": {
       "XWALK_VERSION": "23+",
       "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
@@ -80,31 +64,16 @@
       "XWALK_MODE": "embedded",
       "XWALK_MULTIPLEAPK": "true",
       "PACKAGE_NAME": "com.mb.android"
+    },
+    "cordova-android-support-gradle-release": {
+      "ANDROID_SUPPORT_VERSION": "27.+",
+      "PACKAGE_NAME": "com.mb.android"
     }
   },
   "dependent_plugins": {},
-  "modules": [
-    {
-      "id": "acidhax.cordova.chromecast.ChromecastApi",
-      "file": "plugins/acidhax.cordova.chromecast/chrome.cast.js",
-      "pluginId": "acidhax.cordova.chromecast",
-      "clobbers": [
-        "chrome.cast"
-      ]
-    },
-    {
-      "id": "acidhax.cordova.chromecast.EventEmitter",
-      "file": "plugins/acidhax.cordova.chromecast/EventEmitter.js",
-      "pluginId": "acidhax.cordova.chromecast"
-    },
-    {
-      "id": "acidhax.cordova.chromecast.tests",
-      "file": "plugins/acidhax.cordova.chromecast/tests/tests.js",
-      "pluginId": "acidhax.cordova.chromecast"
-    }
-  ],
+  "modules": [],
   "plugin_metadata": {
-    "acidhax.cordova.chromecast": "0.0.1-alpha",
-    "cordova-plugin-crosswalk-webview": "2.4.0"
+    "cordova-plugin-crosswalk-webview": "2.4.0",
+    "cordova-android-support-gradle-release": "1.4.5"
   }
 }

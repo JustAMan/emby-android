@@ -15,6 +15,7 @@
     "is_top_level": false,
     "variables": {}
   },
+
   "acidhax.cordova.chromecast": {
     "source": {
       "type": "git",
@@ -24,6 +25,7 @@
     "is_top_level": true,
     "variables": {}
   },
+
   "cordova-android-support-v4": {
     "source": {
       "type": "registry",
@@ -44,6 +46,14 @@
     "source": {
       "type": "registry",
       "id": "cordova-plugin-crosswalk-webview@2.4.0"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-android-support-gradle-release": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-android-support-gradle-release"
     },
     "is_top_level": true,
     "variables": {}
