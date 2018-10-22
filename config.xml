@@ -89,6 +89,13 @@
         <preference name="SplashScreenBackgroundColor" value="#1f1f1f" />
         <preference name="BackgroundColor" value="0xff222222" />
     </platform>
-	<preference name="xwalkVersion" value="21+" />
+    <preference name="xwalkVersion" value="21+" />
     <preference name="xwalkUserAgent" value="android crosswalk/21 Chrome/51 Mobile Safari/537.36" />
+    <plugin name="cordova-plugin-crosswalk-webview" spec="~2.4.0">
+        <variable name="XWALK_VERSION" value="23+" />
+        <variable name="XWALK_LITEVERSION" value="xwalk_core_library_canary:17+" />
+        <variable name="XWALK_COMMANDLINE" value="--disable-pull-to-refresh-effect" />
+        <variable name="XWALK_MODE" value="embedded" />
+        <variable name="XWALK_MULTIPLEAPK" value="true" />
+    </plugin>
 </widget>

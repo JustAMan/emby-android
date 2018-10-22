@@ -56,6 +56,7 @@ public class SystemWebViewClient extends WebViewClient {
 
     private static final String TAG = "SystemWebViewClient";
     protected final SystemWebViewEngine parentEngine;
+    private boolean doClearHistory = false;
     boolean isCurrentlyLoading;
 
     /** The authorization tokens. */
@@ -111,7 +112,7 @@ public class SystemWebViewClient extends WebViewClient {
      * @param request
      */
     @Override
-    @TargetApi(21)
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void onReceivedClientCertRequest (WebView view, ClientCertRequest request)
     {
 
@@ -161,6 +162,16 @@ public class SystemWebViewClient extends WebViewClient {
         }
         isCurrentlyLoading = false;
 
+        /**
+         * Because of a timing issue we need to clear this history in onPageFinished as well as
+         * onPageStarted. However we only want to do this if the doClearHistory boolean is set to
+         * true. You see when you load a url with a # in it which is common in jQuery applications
+         * onPageStared is not called. Clearing the history at that point would break jQuery apps.
+         */
+        if (this.doClearHistory) {
+            view.clearHistory();
+            this.doClearHistory = false;
+        }
         parentEngine.client.onPageFinishedLoading(url);
 
     }
@@ -196,6 +207,39 @@ public class SystemWebViewClient extends WebViewClient {
             }
         }
         parentEngine.client.onReceivedError(errorCode, description, failingUrl);
+    }
+
+    /**
+     * Notify the host application that an SSL error occurred while loading a resource.
+     * The host application must call either handler.cancel() or handler.proceed().
+     * Note that the decision may be retained for use in response to future SSL errors.
+     * The default behavior is to cancel the load.
+     *
+     * @param view          The WebView that is initiating the callback.
+     * @param handler       An SslErrorHandler object that will handle the user's response.
+     * @param error         The SSL error object.
+     */
+    @Override
+    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+
+        final String packageName = parentEngine.cordova.getActivity().getPackageName();
+        final PackageManager pm = parentEngine.cordova.getActivity().getPackageManager();
+
+        ApplicationInfo appInfo;
+        try {
+            appInfo = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+            if ((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+                // debug = true
+                handler.proceed();
+                return;
+            } else {
+                // debug = false
+                super.onReceivedSslError(view, handler, error);
+            }
+        } catch (NameNotFoundException e) {
+            // When it doubt, lock it out!
+            super.onReceivedSslError(view, handler, error);
+        }
     }
 
 
@@ -271,15 +315,39 @@ public class SystemWebViewClient extends WebViewClient {
         this.authenticationTokens.clear();
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-        // If we don't need to special-case the request, let the browser load it.
-        return null;
+        try {
+            // Check the against the whitelist and lock out access to the WebView directory
+            // Changing this will cause problems for your application
+            if (!parentEngine.pluginManager.shouldAllowRequest(url)) {
+                LOG.w(TAG, "URL blocked by whitelist: " + url);
+                // Results in a 404.
+                return new WebResourceResponse("text/plain", "UTF-8", null);
+            }
+
+            CordovaResourceApi resourceApi = parentEngine.resourceApi;
+            Uri origUri = Uri.parse(url);
+            // Allow plugins to intercept WebView requests.
+            Uri remappedUri = resourceApi.remapUri(origUri);
+
+            if (!origUri.equals(remappedUri) || needsSpecialsInAssetUrlFix(origUri) || needsKitKatContentUrlFix(origUri)) {
+                CordovaResourceApi.OpenForReadResult result = resourceApi.openForRead(remappedUri, true);
+                return new WebResourceResponse(result.mimeType, "UTF-8", result.inputStream);
+            }
+            // If we don't need to special-case the request, let the browser load it.
+            return null;
+        } catch (IOException e) {
+            if (!(e instanceof FileNotFoundException)) {
+                LOG.e(TAG, "Error occurred while loading a file (returning a 404).", e);
+            }
+            // Results in a 404.
+            return new WebResourceResponse("text/plain", "UTF-8", null);
+        }
     }
 
     private static boolean needsKitKatContentUrlFix(Uri uri) {
-        return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT && "content".equals(uri.getScheme());
+        return "content".equals(uri.getScheme());
     }
 
     private static boolean needsSpecialsInAssetUrlFix(Uri uri) {
@@ -294,11 +362,6 @@ public class SystemWebViewClient extends WebViewClient {
             return false;
         }
 
-        switch(android.os.Build.VERSION.SDK_INT){
-            case android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH:
-            case android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1:
-                return true;
-        }
         return false;
     }
 }

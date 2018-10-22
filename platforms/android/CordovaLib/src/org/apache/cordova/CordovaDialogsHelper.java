@@ -21,7 +21,6 @@ package org.apache.cordova;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.ColorStateList;
 import android.view.KeyEvent;
 import android.widget.EditText;
 
@@ -36,13 +35,10 @@ public class CordovaDialogsHelper {
         this.context = context;
     }
 
-    private int getTheme(){
-        return 5;
-    }
     public void showAlert(String message, final Result result) {
-        AlertDialog.Builder dlg = new AlertDialog.Builder(context, getTheme());
+        AlertDialog.Builder dlg = new AlertDialog.Builder(context);
         dlg.setMessage(message);
-        //dlg.setTitle("Alert");
+        dlg.setTitle("Alert");
         //Don't let alerts break the back button
         dlg.setCancelable(true);
         dlg.setPositiveButton(android.R.string.ok,
@@ -73,9 +69,9 @@ public class CordovaDialogsHelper {
     }
 
     public void showConfirm(String message, final Result result) {
-        AlertDialog.Builder dlg = new AlertDialog.Builder(context, getTheme());
+        AlertDialog.Builder dlg = new AlertDialog.Builder(context);
         dlg.setMessage(message);
-        //dlg.setTitle("Confirm");
+        dlg.setTitle("Confirm");
         dlg.setCancelable(true);
         dlg.setPositiveButton(android.R.string.ok,
                 new DialogInterface.OnClickListener() {
@@ -120,7 +116,7 @@ public class CordovaDialogsHelper {
      */
     public void showPrompt(String message, String defaultValue, final Result result) {
         // Returning false would also show a dialog, but the default one shows the origin (ugly).
-        AlertDialog.Builder dlg = new AlertDialog.Builder(context, AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+        AlertDialog.Builder dlg = new AlertDialog.Builder(context);
         dlg.setMessage(message);
         final EditText input = new EditText(context);
         if (defaultValue != null) {

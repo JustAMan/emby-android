@@ -28,7 +28,6 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Debug;
-import android.util.Log;
 
 /**
  * PluginManager is exposed to JavaScript in the Cordova WebView.
@@ -122,7 +121,7 @@ public class PluginManager {
     public void exec(final String service, final String action, final String callbackId, final String rawArgs) {
         CordovaPlugin plugin = getPlugin(service);
         if (plugin == null) {
-            Log.d(TAG, "exec() call to unknown plugin: " + service);
+            LOG.d(TAG, "exec() call to unknown plugin: " + service);
             PluginResult cr = new PluginResult(PluginResult.Status.CLASS_NOT_FOUND_EXCEPTION);
             app.sendPluginResult(cr, callbackId);
             return;
@@ -134,7 +133,7 @@ public class PluginManager {
             long duration = System.currentTimeMillis() - pluginStartTime;
 
             if (duration > SLOW_EXEC_WARNING_THRESHOLD) {
-                Log.w(TAG, "THREAD WARNING: exec() call to " + service + "." + action + " blocked the main thread for " + duration + "ms. Plugin should use CordovaInterface.getThreadPool().");
+                LOG.w(TAG, "THREAD WARNING: exec() call to " + service + "." + action + " blocked the main thread for " + duration + "ms. Plugin should use CordovaInterface.getThreadPool().");
             }
             if (!wasValidAction) {
                 PluginResult cr = new PluginResult(PluginResult.Status.INVALID_ACTION);
@@ -144,7 +143,7 @@ public class PluginManager {
             PluginResult cr = new PluginResult(PluginResult.Status.JSON_EXCEPTION);
             callbackContext.sendPluginResult(cr);
         } catch (Exception e) {
-            Log.e(TAG, "Uncaught exception from plugin", e);
+            LOG.e(TAG, "Uncaught exception from plugin", e);
             callbackContext.error(e.getMessage());
         }
     }
@@ -222,9 +221,9 @@ public class PluginManager {
      * @param handler           The HttpAuthHandler used to set the WebView's response
      * @param host              The host requiring authentication
      * @param realm             The realm for which authentication is required
-     * 
+     *
      * @return                  Returns True if there is a plugin which will resolve this auth challenge, otherwise False
-     * 
+     *
      */
     public boolean onReceivedHttpAuthRequest(CordovaWebView view, ICordovaHttpAuthHandler handler, String host, String realm) {
         for (CordovaPlugin plugin : this.pluginMap.values()) {
@@ -234,7 +233,7 @@ public class PluginManager {
         }
         return false;
     }
-    
+
     /**
      * Called when he system received an SSL client certificate request.  Plugin can use
      * the supplied ClientCertRequest to process this certificate challenge.
@@ -342,7 +341,30 @@ public class PluginManager {
      *                  false to block the resource.
      */
     public boolean shouldAllowRequest(String url) {
-        return true;
+        for (PluginEntry entry : this.entryMap.values()) {
+            CordovaPlugin plugin = pluginMap.get(entry.service);
+            if (plugin != null) {
+                Boolean result = plugin.shouldAllowRequest(url);
+                if (result != null) {
+                    return result;
+                }
+            }
+        }
+
+        // Default policy:
+        if (url.startsWith("blob:") || url.startsWith("data:") || url.startsWith("about:blank")) {
+            return true;
+        }
+        // TalkBack requires this, so allow it by default.
+        if (url.startsWith("https://ssl.gstatic.com/accessibility/javascript/android/")) {
+            return true;
+        }
+        if (url.startsWith("file://")) {
+            //This directory on WebKit/Blink based webviews contains SQLite databases!
+            //DON'T CHANGE THIS UNLESS YOU KNOW WHAT YOU'RE DOING!
+            return !url.contains("/app_webview/");
+        }
+        return false;
     }
 
     /**
@@ -357,7 +379,18 @@ public class PluginManager {
      *                  false to block the navigation.
      */
     public boolean shouldAllowNavigation(String url) {
-        return true;
+        for (PluginEntry entry : this.entryMap.values()) {
+            CordovaPlugin plugin = pluginMap.get(entry.service);
+            if (plugin != null) {
+                Boolean result = plugin.shouldAllowNavigation(url);
+                if (result != null) {
+                    return result;
+                }
+            }
+        }
+
+        // Default policy:
+        return url.startsWith("file://") || url.startsWith("about:blank");
     }
 
 
@@ -365,7 +398,18 @@ public class PluginManager {
      * Called when the webview is requesting the exec() bridge be enabled.
      */
     public boolean shouldAllowBridgeAccess(String url) {
-        return true;
+        for (PluginEntry entry : this.entryMap.values()) {
+            CordovaPlugin plugin = pluginMap.get(entry.service);
+            if (plugin != null) {
+                Boolean result = plugin.shouldAllowBridgeAccess(url);
+                if (result != null) {
+                    return result;
+                }
+            }
+        }
+
+        // Default policy:
+        return url.startsWith("file://");
     }
 
     /**
@@ -381,7 +425,18 @@ public class PluginManager {
      *                  false to block the intent.
      */
     public Boolean shouldOpenExternalUrl(String url) {
-        return true;
+        for (PluginEntry entry : this.entryMap.values()) {
+            CordovaPlugin plugin = pluginMap.get(entry.service);
+            if (plugin != null) {
+                Boolean result = plugin.shouldOpenExternalUrl(url);
+                if (result != null) {
+                    return result;
+                }
+            }
+        }
+        // Default policy:
+        // External URLs are not allowed
+        return false;
     }
 
     /**

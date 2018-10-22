@@ -52,20 +52,12 @@ public class SystemWebView extends WebView implements CordovaWebViewEngine.Engin
         this.cordova = cordova;
         this.parentEngine = parentEngine;
         if (this.viewClient == null) {
-            setWebViewClient(CreateSystemWebViewClient(parentEngine));
+            setWebViewClient(new SystemWebViewClient(parentEngine));
         }
 
         if (this.chromeClient == null) {
-            setWebChromeClient(CreateChromeClient(parentEngine));
+            setWebChromeClient(new SystemWebChromeClient(parentEngine));
         }
-    }
-
-    public SystemWebViewClient CreateSystemWebViewClient(SystemWebViewEngine parentEngine){
-        return new SystemWebViewClient(parentEngine);
-    }
-
-    public SystemWebChromeClient CreateChromeClient(SystemWebViewEngine parentEngine){
-        return new SystemWebChromeClient(parentEngine);
     }
 
     @Override

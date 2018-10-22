@@ -1,115 +1,110 @@
 {
-    "prepare_queue": {
-        "installed": [],
-        "uninstalled": []
-    },
-    "config_munge": {
-        "files": {
-            "res/xml/config.xml": {
-                "parents": {
-                    "/widget": [],
-                    "/*": [
-                        {
-                            "xml": "<feature name=\"Chromecast\"><param name=\"android-package\" value=\"acidhax.cordova.chromecast.Chromecast\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"xwalkVersion\" value=\"20+\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"xwalkLiteVersion\" value=\"xwalk_core_library_canary:17+\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"xwalkCommandLine\" value=\"--disable-pull-to-refresh-effect\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"xwalkMode\" value=\"embedded\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"xwalkMultipleApk\" value=\"true\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"android-minSdkVersion\" value=\"16\" />",
-                            "count": 1
-                        }
-                    ]
-                }
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {
+      "res/xml/config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<feature name=\"Chromecast\"><param name=\"android-package\" value=\"acidhax.cordova.chromecast.Chromecast\" /></feature>",
+              "count": 1
             },
-            "AndroidManifest.xml": {
-                "parents": {
-                    "/*": [
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
-                            "count": 1
-                        }
-                    ],
-                    "/manifest/application": [
-                        {
-                            "xml": "<meta-data android:name=\"com.google.android.gms.version\" android:value=\"@integer/google_play_services_version\" />",
-                            "count": 1
-                        }
-                    ],
-                    "/manifest": []
-                }
+            {
+              "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
+              "count": 1
             },
-            "config.xml": {
-                "parents": {
-                    "/*": []
-                }
+            {
+              "xml": "<preference name=\"xwalkVersion\" value=\"23+\" />",
+              "count": 1
             },
-            "res/values/billing_key_param.xml": {
-                "parents": {
-                    "/*": [
-                        {
-                            "xml": "<string name=\"billing_key_param\">DF</string>",
-                            "count": 1
-                        }
-                    ]
-                }
+            {
+              "xml": "<preference name=\"xwalkLiteVersion\" value=\"xwalk_core_library_canary:17+\" />",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"xwalkCommandLine\" value=\"--disable-pull-to-refresh-effect\" />",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"xwalkMode\" value=\"embedded\" />",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"xwalkMultipleApk\" value=\"true\" />",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"android-minSdkVersion\" value=\"16\" />",
+              "count": 1
             }
+          ]
         }
-    },
-    "installed_plugins": {
-        "acidhax.cordova.chromecast": {
-            "PACKAGE_NAME": "com.mb.android"
-        },
-        "cordova-plugin-crosswalk-webview": {
-            "XWALK_VERSION": "20+",
-            "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
-            "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
-            "XWALK_MODE": "embedded",
-            "XWALK_MULTIPLEAPK": "true",
-            "PACKAGE_NAME": "com.mb.android"
+      },
+      "AndroidManifest.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+              "count": 2
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
+              "count": 2
+            }
+          ],
+          "/manifest/application": [
+            {
+              "xml": "<meta-data android:name=\"com.google.android.gms.version\" android:value=\"@integer/google_play_services_version\" />",
+              "count": 1
+            }
+          ]
         }
-    },
-    "dependent_plugins": {},
-    "modules": [
-        {
-            "file": "plugins/acidhax.cordova.chromecast/chrome.cast.js",
-            "id": "acidhax.cordova.chromecast.ChromecastApi",
-            "clobbers": [
-                "chrome.cast"
-            ]
-        },
-        {
-            "file": "plugins/acidhax.cordova.chromecast/EventEmitter.js",
-            "id": "acidhax.cordova.chromecast.EventEmitter"
-        },
-        {
-            "file": "plugins/acidhax.cordova.chromecast/tests/tests.js",
-            "id": "acidhax.cordova.chromecast.tests"
-        }
-    ],
-    "plugin_metadata": {
-        "cordova-plugin-crosswalk-webview": "2.0.0"
+      }
     }
+  },
+  "installed_plugins": {
+    "acidhax.cordova.chromecast": {
+      "PACKAGE_NAME": "com.mb.android"
+    },
+    "cordova-plugin-crosswalk-webview": {
+      "XWALK_VERSION": "23+",
+      "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
+      "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
+      "XWALK_MODE": "embedded",
+      "XWALK_MULTIPLEAPK": "true",
+      "PACKAGE_NAME": "com.mb.android"
+    }
+  },
+  "dependent_plugins": {},
+  "modules": [
+    {
+      "id": "acidhax.cordova.chromecast.ChromecastApi",
+      "file": "plugins/acidhax.cordova.chromecast/chrome.cast.js",
+      "pluginId": "acidhax.cordova.chromecast",
+      "clobbers": [
+        "chrome.cast"
+      ]
+    },
+    {
+      "id": "acidhax.cordova.chromecast.EventEmitter",
+      "file": "plugins/acidhax.cordova.chromecast/EventEmitter.js",
+      "pluginId": "acidhax.cordova.chromecast"
+    },
+    {
+      "id": "acidhax.cordova.chromecast.tests",
+      "file": "plugins/acidhax.cordova.chromecast/tests/tests.js",
+      "pluginId": "acidhax.cordova.chromecast"
+    }
+  ],
+  "plugin_metadata": {
+    "acidhax.cordova.chromecast": "0.0.1-alpha",
+    "cordova-plugin-crosswalk-webview": "2.4.0"
+  }
 }

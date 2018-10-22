@@ -1,52 +1,51 @@
 {
-    "org.apache.cordova.device": {
-        "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.device"
-        },
-        "is_top_level": false,
-        "variables": {}
+  "org.apache.cordova.device": {
+    "source": {
+      "type": "registry",
+      "id": "org.apache.cordova.device"
     },
-    "org.apache.cordova.file": {
-        "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.file"
-        },
-        "is_top_level": false,
-        "variables": {}
+    "is_top_level": false,
+    "variables": {}
+  },
+  "org.apache.cordova.file": {
+    "source": {
+      "type": "registry",
+      "id": "org.apache.cordova.file"
     },
-    "acidhax.cordova.chromecast": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/MediaBrowser/cordova-chromecast",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
+    "is_top_level": false,
+    "variables": {}
+  },
+  "acidhax.cordova.chromecast": {
+    "source": {
+      "type": "git",
+      "url": "https://github.com/MediaBrowser/cordova-chromecast",
+      "subdir": "."
     },
-    "cordova-android-support-v4": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-android-support-v4"
-        },
-        "is_top_level": true,
-        "variables": {}
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-android-support-v4": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-android-support-v4"
     },
-    "cordova-plugin-compat": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-compat"
-        },
-        "is_top_level": false,
-        "variables": {}
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-compat": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-compat"
     },
-    "cordova-plugin-crosswalk-webview": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/crosswalk-project/cordova-plugin-crosswalk-webview",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    }
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-crosswalk-webview": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-crosswalk-webview@2.4.0"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
 }
