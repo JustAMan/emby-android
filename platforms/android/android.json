@@ -35,6 +35,10 @@
             {
               "xml": "<preference name=\"android-minSdkVersion\" value=\"16\" />",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"Chromecast\"><param name=\"android-package\" value=\"acidhax.cordova.chromecast.Chromecast\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -42,6 +46,10 @@
       "AndroidManifest.xml": {
         "parents": {
           "/*": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+              "count": 1
+            },
             {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
               "count": 1
@@ -51,7 +59,12 @@
               "count": 1
             }
           ],
-          "/manifest/application": []
+          "/manifest/application": [
+            {
+              "xml": "<meta-data android:name=\"com.google.android.gms.version\" android:value=\"@integer/google_play_services_version\" />",
+              "count": 1
+            }
+          ]
         }
       }
     }
@@ -68,12 +81,39 @@
     "cordova-android-support-gradle-release": {
       "ANDROID_SUPPORT_VERSION": "27.+",
       "PACKAGE_NAME": "com.mb.android"
+    },
+    "cordova-support-google-services": {
+      "PACKAGE_NAME": "com.mb.android"
+    },
+    "acidhax.cordova.chromecast": {
+      "PACKAGE_NAME": "com.mb.android"
     }
   },
   "dependent_plugins": {},
-  "modules": [],
+  "modules": [
+    {
+      "id": "acidhax.cordova.chromecast.ChromecastApi",
+      "file": "plugins/acidhax.cordova.chromecast/chrome.cast.js",
+      "pluginId": "acidhax.cordova.chromecast",
+      "clobbers": [
+        "chrome.cast"
+      ]
+    },
+    {
+      "id": "acidhax.cordova.chromecast.EventEmitter",
+      "file": "plugins/acidhax.cordova.chromecast/EventEmitter.js",
+      "pluginId": "acidhax.cordova.chromecast"
+    },
+    {
+      "id": "acidhax.cordova.chromecast.tests",
+      "file": "plugins/acidhax.cordova.chromecast/tests/tests.js",
+      "pluginId": "acidhax.cordova.chromecast"
+    }
+  ],
   "plugin_metadata": {
     "cordova-plugin-crosswalk-webview": "2.4.0",
-    "cordova-android-support-gradle-release": "1.4.5"
+    "cordova-android-support-gradle-release": "1.4.5",
+    "cordova-support-google-services": "1.2.1",
+    "acidhax.cordova.chromecast": "0.0.1-alpha"
   }
 }

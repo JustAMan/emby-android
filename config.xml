@@ -87,7 +87,8 @@
         <splash density="port-xxhdpi" src="res/android/xxhdpi/splash-port.png" />
         <splash density="port-xxxhdpi" src="res/android/xxxhdpi/splash-port.png" />
         <preference name="SplashScreenBackgroundColor" value="#1f1f1f" />
-        <preference name="BackgroundColor" value="0xff222222" />
+	<preference name="BackgroundColor" value="0xff222222" />
+	<resource-file src="google-services.json" target="app/google-services.json" />
     </platform>
     <preference name="xwalkVersion" value="21+" />
     <preference name="xwalkUserAgent" value="android crosswalk/21 Chrome/51 Mobile Safari/537.36" />
@@ -101,4 +102,5 @@
     <plugin name="cordova-android-support-gradle-release" spec="~1.4.5">
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
+    <plugin name="cordova-support-google-services" spec="~1.2.1" />
 </widget>

@@ -21,6 +21,9 @@
     "cordova-android-support-gradle-release": {
       "ANDROID_SUPPORT_VERSION": "27.+",
       "PACKAGE_NAME": "com.mb.android"
+    },
+    "cordova-support-google-services": {
+      "PACKAGE_NAME": "com.mb.android"
     }
   },
   "dependent_plugins": {}

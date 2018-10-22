@@ -15,7 +15,6 @@
     "is_top_level": false,
     "variables": {}
   },
-
   "acidhax.cordova.chromecast": {
     "source": {
       "type": "git",
@@ -25,7 +24,6 @@
     "is_top_level": true,
     "variables": {}
   },
-
   "cordova-android-support-v4": {
     "source": {
       "type": "registry",
@@ -54,6 +52,14 @@
     "source": {
       "type": "registry",
       "id": "cordova-android-support-gradle-release"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-support-google-services": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-support-google-services"
     },
     "is_top_level": true,
     "variables": {}
